@@ -212,6 +212,10 @@ class Tag(ApiKey, Enum):
     BATTERY             = ApiKey(key="battery",
                                  state_fn=FordpassDataHandler.get_battery_state,
                                  attrs_fn=FordpassDataHandler.get_battery_attrs)
+    BATTERY_VOLTAGE     = ApiKey(key="batteryVoltage",
+                                 state_fn=FordpassDataHandler.get_battery_voltage_state)
+    BATTERY_LOAD_STATUS = ApiKey(key="batteryLoadStatus",
+                                 state_fn=FordpassDataHandler.get_battery_load_status_state)
     OIL                 = ApiKey(key="oil",
                                  state_fn=lambda data, prev_state: FordpassDataHandler.get_value_for_metrics_key(data, "oilLifeRemaining", None),
                                  attrs_fn=lambda data, units: FordpassDataHandler.get_metrics_dict(data, "oilLifeRemaining"))
@@ -277,6 +281,22 @@ class Tag(ApiKey, Enum):
     INDICATORS          = ApiKey(key="indicators",
                                  state_fn=FordpassDataHandler.get_indicators_state,
                                  attrs_fn=FordpassDataHandler.get_indicators_attrs)
+    CHECK_ENGINE_LIGHT  = ApiKey(key="checkEngineLight",
+                                 state_fn=FordpassDataHandler.get_check_engine_light_state)
+    BRAKE_SYSTEM_WARNING = ApiKey(key="brakeSystemWarning",
+                                 state_fn=FordpassDataHandler.get_brake_system_warning_state)
+    ABS_WARNING         = ApiKey(key="absWarning",
+                                 state_fn=FordpassDataHandler.get_abs_warning_state)
+    AIRBAG_WARNING      = ApiKey(key="airbagWarning",
+                                 state_fn=FordpassDataHandler.get_airbag_warning_state)
+    LOW_FUEL_WARNING    = ApiKey(key="lowFuelWarning",
+                                 state_fn=FordpassDataHandler.get_low_fuel_warning_state)
+    LOW_BATTERY_WARNING = ApiKey(key="lowBatteryWarning",
+                                 state_fn=FordpassDataHandler.get_low_battery_warning_state)
+    TRACTION_CONTROL_WARNING = ApiKey(key="tractionControlWarning",
+                                 state_fn=FordpassDataHandler.get_traction_control_warning_state)
+    ENGINE_FAULT_WARNING = ApiKey(key="engineFaultIndicator",
+                                 state_fn=FordpassDataHandler.get_engine_fault_warning_state)
     COOLANT_TEMP        = ApiKey(key="coolantTemp",
                                  state_fn=lambda data, prev_state: FordpassDataHandler.get_value_for_metrics_key(data, "engineCoolantTemp", None))
     OUTSIDE_TEMP        = ApiKey(key="outsideTemp",
@@ -345,6 +365,16 @@ class Tag(ApiKey, Enum):
 FUEL_OR_PEV_ONLY_TAGS: Final = [
     Tag.FUEL,
     Tag.ENGINE_OIL_TEMP,
+    Tag.BATTERY_VOLTAGE,
+    Tag.BATTERY_LOAD_STATUS,
+    Tag.CHECK_ENGINE_LIGHT,
+    Tag.BRAKE_SYSTEM_WARNING,
+    Tag.ABS_WARNING,
+    Tag.AIRBAG_WARNING,
+    Tag.LOW_FUEL_WARNING,
+    Tag.LOW_BATTERY_WARNING,
+    Tag.TRACTION_CONTROL_WARNING,
+    Tag.ENGINE_FAULT_WARNING,
     Tag.DIESEL_SYSTEM_STATUS,
     Tag.EXHAUST_FLUID_LEVEL,
 ]
@@ -431,6 +461,25 @@ SENSORS = [
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=PERCENTAGE,
         has_entity_name=True,
+    ),
+    # Tag.BATTERY_VOLTAGE: {"icon": "mdi:lightning-bolt", "device_class": "voltage", "state_class": "measurement"},
+    ExtSensorEntityDescription(
+        tag=Tag.BATTERY_VOLTAGE,
+        key=Tag.BATTERY_VOLTAGE.key,
+        icon="mdi:lightning-bolt",
+        device_class=SensorDeviceClass.VOLTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.BATTERY_LOAD_STATUS: {"icon": "mdi:battery-charging", "state_class": "measurement"},
+    ExtSensorEntityDescription(
+        tag=Tag.BATTERY_LOAD_STATUS,
+        key=Tag.BATTERY_LOAD_STATUS.key,
+        icon="mdi:battery-charging",
+        state_class=SensorStateClass.MEASUREMENT,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     # Tag.OIL: {"icon": "mdi:oil", "api_key": "oilLifeRemaining", "measurement": PERCENTAGE},
     ExtSensorEntityDescription(
@@ -554,6 +603,78 @@ SENSORS = [
         tag=Tag.INDICATORS,
         key=Tag.INDICATORS.key,
         icon="mdi:engine-outline",
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.CHECK_ENGINE_LIGHT: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.CHECK_ENGINE_LIGHT,
+        key=Tag.CHECK_ENGINE_LIGHT.key,
+        icon="mdi:warning-circle",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.BRAKE_SYSTEM_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.BRAKE_SYSTEM_WARNING,
+        key=Tag.BRAKE_SYSTEM_WARNING.key,
+        icon="mdi:warning-circle",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.ABS_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.ABS_WARNING,
+        key=Tag.ABS_WARNING.key,
+        icon="mdi:warning-circle",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.AIRBAG_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.AIRBAG_WARNING,
+        key=Tag.AIRBAG_WARNING.key,
+        icon="mdi:warning-circle",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.LOW_FUEL_WARNING: {"icon": "mdi:gas-cylinder-empty", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.LOW_FUEL_WARNING,
+        key=Tag.LOW_FUEL_WARNING.key,
+        icon="mdi:gas-cylinder-empty",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.LOW_BATTERY_WARNING: {"icon": "mdi:battery-low", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.LOW_BATTERY_WARNING,
+        key=Tag.LOW_BATTERY_WARNING.key,
+        icon="mdi:battery-low",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.TRACTION_CONTROL_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.TRACTION_CONTROL_WARNING,
+        key=Tag.TRACTION_CONTROL_WARNING.key,
+        icon="mdi:warning-circle",
+        device_class=SensorDeviceClass.PROBLEM,
+        has_entity_name=True,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    # Tag.ENGINE_FAULT_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    ExtSensorEntityDescription(
+        tag=Tag.ENGINE_FAULT_WARNING,
+        key=Tag.ENGINE_FAULT_WARNING.key,
+        icon="mdi:warning-circle",
+        device_class=SensorDeviceClass.PROBLEM,
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
@@ -805,11 +926,12 @@ SENSORS = [
 ]
 
 # UNHANDLED_METTRICS:
-# hybridVehicleModeStatus
+# hybridVehicleModeStatus (user not interested in hybrid/EV data)
 # seatBeltStatus
 # configurations
 # vehicleLifeCycleMode
 # displaySystemOfMeasure
+# Note: Individual warning indicators (checkEngineLight, brakeSystemWarning, absWarning, etc.) are now exposed as separate sensors
 
 
 SENSORSX = {

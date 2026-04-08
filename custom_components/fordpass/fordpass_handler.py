@@ -1059,6 +1059,37 @@ class FordpassDataHandler:
 
         return attrs or None
 
+    @staticmethod
+    def get_indicator_state(data, indicator_key: str, prev_state=None):
+        """Get state of a specific indicator warning flag."""
+        data_metrics = FordpassDataHandler.get_metrics(data)
+        return data_metrics.get("indicators", {}).get(indicator_key, {}).get("value")
+
+    # Individual indicator warning sensors
+    def get_check_engine_light_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "checkEngineLight")
+
+    def get_brake_system_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "brakeSystemWarning")
+
+    def get_abs_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "absWarning")
+
+    def get_airbag_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "airbagWarning")
+
+    def get_low_fuel_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "lowFuelWarning")
+
+    def get_low_battery_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "lowBatteryWarning")
+
+    def get_traction_control_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "tractionControlWarning")
+
+    def get_engine_fault_warning_state(data, prev_state=None):
+        return FordpassDataHandler.get_indicator_state(data, "engineFaultIndicator")
+
 
     # OUTSIDE_TEMP attributes
     def get_outside_temp_attrs(data, units:UnitSystem):
@@ -1118,6 +1149,24 @@ class FordpassDataHandler:
                 if "distance_traveled" in tripData and isinstance(tripData["distance_traveled"], Number):
                     attrs["tripDistanceTraveled"] = FordpassDataHandler.localize_distance(tripData["distance_traveled"], units)
         return attrs or None
+
+
+    # BATTERY_VOLTAGE state (12V primary battery)
+    def get_battery_voltage_state(data, prev_state=None):
+        data_metrics = FordpassDataHandler.get_metrics(data)
+        if "batteryVoltage" in data_metrics:
+            if data_metrics["batteryVoltage"].get("vehicleBattery", UNDEFINED).lower() == "primary_battery":
+                return FordpassDataHandler.get_value_for_metrics_key(data, "batteryVoltage")
+        return None
+
+
+    # BATTERY_LOAD_STATUS state (12V primary battery)
+    def get_battery_load_status_state(data, prev_state=None):
+        data_metrics = FordpassDataHandler.get_metrics(data)
+        if "batteryLoadStatus" in data_metrics:
+            if data_metrics["batteryLoadStatus"].get("vehicleBattery", UNDEFINED).lower() == "primary_battery":
+                return FordpassDataHandler.get_value_for_metrics_key(data, "batteryLoadStatus")
+        return None
 
 
     # LAST_ENERGY_TRANSFER_LOG_ENTRY state + attributes (from energy_transfer_logs)
