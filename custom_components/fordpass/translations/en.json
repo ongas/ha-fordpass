@@ -220,7 +220,15 @@
             "haflong":          {"name": "Honk & Flash [5 sec.]"},
             "extendremotestart":{"name": "RC (❄|☀): Extend Time"},
             "msgdeleteall":     {"name": "Messages: Delete All"},
-            "msgdeletelast":    {"name": "Messages: Delete Last"}
+            "msgdeletelast":    {"name": "Messages: Delete Last"},
+            "opendriverwindow":        {"name": "Open Driver Window"},
+            "closedriverwindow":       {"name": "Close Driver Window"},
+            "openpassengerwindow":     {"name": "Open Passenger Window"},
+            "closepassengerwindow":    {"name": "Close Passenger Window"},
+            "openreardriverwindow":    {"name": "Open Rear Driver Window"},
+            "closereardriverwindow":   {"name": "Close Rear Driver Window"},
+            "openrearpassengerwindow": {"name": "Open Rear Passenger Window"},
+            "closerearpassengerwindow":{"name": "Close Rear Passenger Window"}
         },
         "device_tracker":   {"tracker": {"name": "Vehicle Tracker"}},
         "lock":             {"doorlock":{"name": "Doors"}},
@@ -292,7 +300,21 @@
             "lastenergyconsumed":       {"name": "EV Energy Consumption (last trip)"},
             "energytransferlogentry":   {"name": "EV Last Charging Session"},
             "remotestartcountdown":     {"name": "RC (❄|☀): Remaining Time"},
-            "doorlock":                 {"name": "State Locks"}
+            "doorlock":                 {"name": "State Locks"},
+            "batteryvoltage":           {"name": "Battery Voltage (12V)"},
+            "batteryloadstatus":        {"name": "Battery Load Status (12V)"},
+            "driverwindow":             {"name": "Driver Window"},
+            "passengerwindow":          {"name": "Passenger Window"},
+            "reardriverwindow":         {"name": "Rear Driver Window"},
+            "rearpassengerwindow":      {"name": "Rear Passenger Window"},
+            "checkenginelight":         {"name": "Check Engine Light"},
+            "brakesystemwarning":       {"name": "Brake System Warning"},
+            "abswarning":               {"name": "ABS Warning"},
+            "airbagwarning":            {"name": "Airbag Warning"},
+            "lowfuelwarning":           {"name": "Low Fuel Warning"},
+            "lowbatterywarning":        {"name": "Low Battery Warning"},
+            "tractioncontrolwarning":   {"name": "Traction Control Warning"},
+            "enginefaultindicator":     {"name": "Engine Fault Warning"}
         },
         "select": {
             "zonelighting": {
