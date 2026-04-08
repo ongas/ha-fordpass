@@ -537,6 +537,63 @@ class FordpassDataHandler:
 
         return attrs
 
+    @staticmethod
+    def get_specific_window_position(data, window_type: str, side: str, prev_state=None):
+        """Get position for a specific window. window_type: 'FRONT' or 'REAR', side: 'DRIVER' or 'PASSENGER'"""
+        data_metrics = FordpassDataHandler.get_metrics(data)
+        for window in data_metrics.get("windowStatus", []):
+            vehicle_window = window.get("vehicleWindow", "").upper()
+            vehicle_side = window.get("vehicleSide", "").upper()
+            
+            # Match window type (FRONT/REAR) and side (DRIVER/PASSENGER)
+            is_front = window_type.upper() == "FRONT" and "FRONT" in vehicle_window
+            is_rear = window_type.upper() == "REAR" and "REAR" in vehicle_window
+            is_matching_side = side.upper() == vehicle_side
+            
+            if (is_front or is_rear) and is_matching_side:
+                windowrange = window.get("value", {}).get("doubleRange", {})
+                if windowrange.get("lowerBound", 0.0) != 0.0 or windowrange.get("upperBound", 0.0) != 0.0:
+                    return "Open"
+                return "Closed"
+        return None
+
+    def get_driver_window_state(data, prev_state=None):
+        return FordpassDataHandler.get_specific_window_position(data, "FRONT", "DRIVER")
+
+    def get_passenger_window_state(data, prev_state=None):
+        return FordpassDataHandler.get_specific_window_position(data, "FRONT", "PASSENGER")
+
+    def get_rear_driver_window_state(data, prev_state=None):
+        return FordpassDataHandler.get_specific_window_position(data, "REAR", "DRIVER")
+
+    def get_rear_passenger_window_state(data, prev_state=None):
+        return FordpassDataHandler.get_specific_window_position(data, "REAR", "PASSENGER")
+
+    # Window control handlers
+    async def open_driver_window(coordinator, vehicle):
+        return await vehicle.open_window(window_type="FRONT", side="DRIVER")
+
+    async def close_driver_window(coordinator, vehicle):
+        return await vehicle.close_window(window_type="FRONT", side="DRIVER")
+
+    async def open_passenger_window(coordinator, vehicle):
+        return await vehicle.open_window(window_type="FRONT", side="PASSENGER")
+
+    async def close_passenger_window(coordinator, vehicle):
+        return await vehicle.close_window(window_type="FRONT", side="PASSENGER")
+
+    async def open_rear_driver_window(coordinator, vehicle):
+        return await vehicle.open_window(window_type="REAR", side="DRIVER")
+
+    async def close_rear_driver_window(coordinator, vehicle):
+        return await vehicle.close_window(window_type="REAR", side="DRIVER")
+
+    async def open_rear_passenger_window(coordinator, vehicle):
+        return await vehicle.open_window(window_type="REAR", side="PASSENGER")
+
+    async def close_rear_passenger_window(coordinator, vehicle):
+        return await vehicle.close_window(window_type="REAR", side="PASSENGER")
+
 
     # LAST_REFRESH state
     def get_last_refresh_state(data, prev_state=None):
