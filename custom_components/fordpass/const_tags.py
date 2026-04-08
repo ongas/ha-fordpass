@@ -433,24 +433,24 @@ RCC_TAGS: Final = [
     Tag.RCC_TEMPERATURE,
 ]
 
-@dataclass(frozen=True)
+@dataclass
 class ExtButtonEntityDescription(ButtonEntityDescription):
     tag: Tag | None = None
     name_addon: str | None = None
 
-@dataclass(frozen=True)
+@dataclass
 class ExtSensorEntityDescription(SensorEntityDescription):
     tag: Tag | None = None
     skip_existence_check: bool | None = None
     name_addon: str | None = None
 
-@dataclass(frozen=True)
+@dataclass
 class ExtSelectEntityDescription(SelectEntityDescription):
     tag: Tag | None = None
     skip_existence_check: bool | None = None
     name_addon: str | None = None
 
-@dataclass(frozen=True)
+@dataclass
 class ExtNumberEntityDescription(NumberEntityDescription):
     tag: Tag | None = None
     skip_existence_check: bool | None = None
@@ -662,75 +662,67 @@ SENSORS = [
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.CHECK_ENGINE_LIGHT: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    # Tag.CHECK_ENGINE_LIGHT
     ExtSensorEntityDescription(
         tag=Tag.CHECK_ENGINE_LIGHT,
         key=Tag.CHECK_ENGINE_LIGHT.key,
-        icon="mdi:warning-circle",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:engine",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.BRAKE_SYSTEM_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    # Tag.BRAKE_SYSTEM_WARNING
     ExtSensorEntityDescription(
         tag=Tag.BRAKE_SYSTEM_WARNING,
         key=Tag.BRAKE_SYSTEM_WARNING.key,
-        icon="mdi:warning-circle",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:car-brake-alert",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.ABS_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    # Tag.ABS_WARNING
     ExtSensorEntityDescription(
         tag=Tag.ABS_WARNING,
         key=Tag.ABS_WARNING.key,
-        icon="mdi:warning-circle",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:car-brake-abs",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.AIRBAG_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    # Tag.AIRBAG_WARNING
     ExtSensorEntityDescription(
         tag=Tag.AIRBAG_WARNING,
         key=Tag.AIRBAG_WARNING.key,
-        icon="mdi:warning-circle",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:airbag",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.LOW_FUEL_WARNING: {"icon": "mdi:gas-cylinder-empty", "device_class": "problem"},
+    # Tag.LOW_FUEL_WARNING
     ExtSensorEntityDescription(
         tag=Tag.LOW_FUEL_WARNING,
         key=Tag.LOW_FUEL_WARNING.key,
-        icon="mdi:gas-cylinder-empty",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:gas-station-off",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.LOW_BATTERY_WARNING: {"icon": "mdi:battery-low", "device_class": "problem"},
+    # Tag.LOW_BATTERY_WARNING
     ExtSensorEntityDescription(
         tag=Tag.LOW_BATTERY_WARNING,
         key=Tag.LOW_BATTERY_WARNING.key,
         icon="mdi:battery-low",
-        device_class=SensorDeviceClass.PROBLEM,
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.TRACTION_CONTROL_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    # Tag.TRACTION_CONTROL_WARNING
     ExtSensorEntityDescription(
         tag=Tag.TRACTION_CONTROL_WARNING,
         key=Tag.TRACTION_CONTROL_WARNING.key,
-        icon="mdi:warning-circle",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:car-traction-control",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.ENGINE_FAULT_WARNING: {"icon": "mdi:warning-circle", "device_class": "problem"},
+    # Tag.ENGINE_FAULT_WARNING
     ExtSensorEntityDescription(
         tag=Tag.ENGINE_FAULT_WARNING,
         key=Tag.ENGINE_FAULT_WARNING.key,
-        icon="mdi:warning-circle",
-        device_class=SensorDeviceClass.PROBLEM,
+        icon="mdi:engine-off",
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
