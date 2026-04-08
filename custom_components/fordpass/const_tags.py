@@ -248,22 +248,10 @@ class Tag(ApiKey, Enum):
                                  state_fn=FordpassDataHandler.get_rear_driver_window_state)
     REAR_PASSENGER_WINDOW = ApiKey(key="rearPassengerWindow",
                                  state_fn=FordpassDataHandler.get_rear_passenger_window_state)
-    OPEN_DRIVER_WINDOW  = ApiKey(key="openDriverWindow",
-                                 press_fn=FordpassDataHandler.open_driver_window)
-    CLOSE_DRIVER_WINDOW = ApiKey(key="closeDriverWindow",
-                                 press_fn=FordpassDataHandler.close_driver_window)
-    OPEN_PASSENGER_WINDOW = ApiKey(key="openPassengerWindow",
-                                 press_fn=FordpassDataHandler.open_passenger_window)
-    CLOSE_PASSENGER_WINDOW = ApiKey(key="closePassengerWindow",
-                                 press_fn=FordpassDataHandler.close_passenger_window)
-    OPEN_REAR_DRIVER_WINDOW = ApiKey(key="openRearDriverWindow",
-                                 press_fn=FordpassDataHandler.open_rear_driver_window)
-    CLOSE_REAR_DRIVER_WINDOW = ApiKey(key="closeRearDriverWindow",
-                                 press_fn=FordpassDataHandler.close_rear_driver_window)
-    OPEN_REAR_PASSENGER_WINDOW = ApiKey(key="openRearPassengerWindow",
-                                 press_fn=FordpassDataHandler.open_rear_passenger_window)
-    CLOSE_REAR_PASSENGER_WINDOW = ApiKey(key="closeRearPassengerWindow",
-                                 press_fn=FordpassDataHandler.close_rear_passenger_window)
+    OPEN_WINDOWS        = ApiKey(key="openWindows",
+                                 press_fn=FordpassDataHandler.open_all_windows)
+    CLOSE_WINDOWS       = ApiKey(key="closeWindows",
+                                 press_fn=FordpassDataHandler.close_all_windows)
     LAST_REFRESH        = ApiKey(key="lastRefresh",
                                  state_fn=FordpassDataHandler.get_last_refresh_state)
     ELVEH               = ApiKey(key="elVeh",
@@ -1084,50 +1072,14 @@ BUTTONS = [
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     ExtButtonEntityDescription(
-        tag=Tag.OPEN_DRIVER_WINDOW,
-        key=Tag.OPEN_DRIVER_WINDOW.key,
+        tag=Tag.OPEN_WINDOWS,
+        key=Tag.OPEN_WINDOWS.key,
         icon="mdi:car-door",
         has_entity_name=True,
     ),
     ExtButtonEntityDescription(
-        tag=Tag.CLOSE_DRIVER_WINDOW,
-        key=Tag.CLOSE_DRIVER_WINDOW.key,
-        icon="mdi:car-door-lock",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.OPEN_PASSENGER_WINDOW,
-        key=Tag.OPEN_PASSENGER_WINDOW.key,
-        icon="mdi:car-door",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.CLOSE_PASSENGER_WINDOW,
-        key=Tag.CLOSE_PASSENGER_WINDOW.key,
-        icon="mdi:car-door-lock",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.OPEN_REAR_DRIVER_WINDOW,
-        key=Tag.OPEN_REAR_DRIVER_WINDOW.key,
-        icon="mdi:car-door",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.CLOSE_REAR_DRIVER_WINDOW,
-        key=Tag.CLOSE_REAR_DRIVER_WINDOW.key,
-        icon="mdi:car-door-lock",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.OPEN_REAR_PASSENGER_WINDOW,
-        key=Tag.OPEN_REAR_PASSENGER_WINDOW.key,
-        icon="mdi:car-door",
-        has_entity_name=True,
-    ),
-    ExtButtonEntityDescription(
-        tag=Tag.CLOSE_REAR_PASSENGER_WINDOW,
-        key=Tag.CLOSE_REAR_PASSENGER_WINDOW.key,
+        tag=Tag.CLOSE_WINDOWS,
+        key=Tag.CLOSE_WINDOWS.key,
         icon="mdi:car-door-lock",
         has_entity_name=True,
     )

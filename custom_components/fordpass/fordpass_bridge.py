@@ -2346,13 +2346,13 @@ class ConnectedFordPassVehicle:
         status = await self.__request_and_poll_command_autonomic(baseurl=AUTONOMIC_URL, write_command="statusRefresh")
         return status
 
-    async def open_window(self, window_type: str, side: str):
-        """Open a specific window (window_type: FRONT/REAR, side: DRIVER/PASSENGER)"""
-        return await self.__request_and_poll_command_autonomic(baseurl=AUTONOMIC_URL, write_command=f"open{window_type.capitalize()}{side.capitalize()}Window")
+    async def open_windows(self):
+        """Open all windows (master reset)"""
+        return await self.__request_and_poll_command_autonomic(baseurl=AUTONOMIC_URL, write_command="openMasterResetWindow")
 
-    async def close_window(self, window_type: str, side: str):
-        """Close a specific window (window_type: FRONT/REAR, side: DRIVER/PASSENGER)"""
-        return await self.__request_and_poll_command_autonomic(baseurl=AUTONOMIC_URL, write_command=f"close{window_type.capitalize()}{side.capitalize()}Window")
+    async def close_windows(self):
+        """Close all windows (master reset)"""
+        return await self.__request_and_poll_command_autonomic(baseurl=AUTONOMIC_URL, write_command="closeMasterResetWindow")
 
 
     async def __request_command(self, command:str, post_data=None, vin=None):

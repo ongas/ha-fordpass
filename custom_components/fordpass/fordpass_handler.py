@@ -569,30 +569,12 @@ class FordpassDataHandler:
     def get_rear_passenger_window_state(data, prev_state=None):
         return FordpassDataHandler.get_specific_window_position(data, "REAR", "PASSENGER")
 
-    # Window control handlers
-    async def open_driver_window(coordinator, vehicle):
-        return await vehicle.open_window(window_type="FRONT", side="DRIVER")
+    # Window control handlers (master open/close all windows)
+    async def open_all_windows(coordinator, vehicle):
+        return await vehicle.open_windows()
 
-    async def close_driver_window(coordinator, vehicle):
-        return await vehicle.close_window(window_type="FRONT", side="DRIVER")
-
-    async def open_passenger_window(coordinator, vehicle):
-        return await vehicle.open_window(window_type="FRONT", side="PASSENGER")
-
-    async def close_passenger_window(coordinator, vehicle):
-        return await vehicle.close_window(window_type="FRONT", side="PASSENGER")
-
-    async def open_rear_driver_window(coordinator, vehicle):
-        return await vehicle.open_window(window_type="REAR", side="DRIVER")
-
-    async def close_rear_driver_window(coordinator, vehicle):
-        return await vehicle.close_window(window_type="REAR", side="DRIVER")
-
-    async def open_rear_passenger_window(coordinator, vehicle):
-        return await vehicle.open_window(window_type="REAR", side="PASSENGER")
-
-    async def close_rear_passenger_window(coordinator, vehicle):
-        return await vehicle.close_window(window_type="REAR", side="PASSENGER")
+    async def close_all_windows(coordinator, vehicle):
+        return await vehicle.close_windows()
 
 
     # LAST_REFRESH state

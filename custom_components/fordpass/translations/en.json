@@ -221,14 +221,8 @@
             "extendremotestart":{"name": "RC (❄|☀): Extend Time"},
             "msgdeleteall":     {"name": "Messages: Delete All"},
             "msgdeletelast":    {"name": "Messages: Delete Last"},
-            "opendriverwindow":        {"name": "Open Driver Window"},
-            "closedriverwindow":       {"name": "Close Driver Window"},
-            "openpassengerwindow":     {"name": "Open Passenger Window"},
-            "closepassengerwindow":    {"name": "Close Passenger Window"},
-            "openreardriverwindow":    {"name": "Open Rear Driver Window"},
-            "closereardriverwindow":   {"name": "Close Rear Driver Window"},
-            "openrearpassengerwindow": {"name": "Open Rear Passenger Window"},
-            "closerearpassengerwindow":{"name": "Close Rear Passenger Window"}
+            "openwindows":              {"name": "Open All Windows"},
+            "closewindows":             {"name": "Close All Windows"}
         },
         "device_tracker":   {"tracker": {"name": "Vehicle Tracker"}},
         "lock":             {"doorlock":{"name": "Doors"}},
