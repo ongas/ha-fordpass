@@ -484,12 +484,11 @@ SENSORS = [
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Tag.BATTERY_LOAD_STATUS: {"icon": "mdi:battery-charging", "state_class": "measurement"},
+    # Tag.BATTERY_LOAD_STATUS: {"icon": "mdi:battery-charging"},
     ExtSensorEntityDescription(
         tag=Tag.BATTERY_LOAD_STATUS,
         key=Tag.BATTERY_LOAD_STATUS.key,
         icon="mdi:battery-charging",
-        state_class=SensorStateClass.MEASUREMENT,
         has_entity_name=True,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
