@@ -108,6 +108,27 @@ There is another Home Assistant integration for Ford Vehicles called [ha-fordcon
 
 
 ## Installation Instructions (3 Steps)
+
+> [!IMPORTANT]
+> ### Migration Required for v2026.5.0+
+> **Version 2026.5.0 introduces automatic OAuth2 flow — this is a breaking change requiring re-authentication.**
+> 
+> If you're upgrading from v2026.4.4 or earlier:
+> 1. Go to Settings → Devices & Services → Integrations
+> 2. For each FordPass entry, click the ⋮ menu → Delete
+> 3. Install/update the integration from HACS
+> 4. Re-add the integration (Settings → Create Integration → FordPass)
+> 5. This time you'll see the new automatic OAuth2 flow:
+>    - Select Brand (Ford/Lincoln) and Region
+>    - Browser opens automatically
+>    - Log in with your Ford credentials
+>    - **No manual code capture required!**
+>    - Browser redirects to HA automatically
+>    - Select your vehicle
+>    - Done!
+>
+> **Migration takes ~2 minutes per vehicle.** Tokens are now stored securely in HA's encrypted storage instead of on disk.
+
 ### Step 1. HACS add the Integration
 
 [![Open your Home Assistant instance and adding repository to HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=marq24&repository=ha-fordpass&category=integration)
@@ -120,34 +141,62 @@ There is another Home Assistant integration for Ford Vehicles called [ha-fordcon
 2. Install the 'correct' (aka 'this') fordpass integration (v2025.9.0 or higher).
 3. Restart HA.
 
-### Step 2. Setup the Integration
+### Step 2. Setup the Integration (v2026.5.0+ - Automatic OAuth2 Flow)
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=fordpass)
 
-7. After the restart go to  `Settings` -> `Devices & Services` area
-8. Add the new integration `FordPass` and follow the instructions:<br/>
-   You will need to provide:
-   - Your __FordPass™/The Lincoln Way™ Email__/Account 
-   - __Select a FordPass™/The Lincoln Way™ Region__ (that is currently supported by the integration)
+1. Go to `Settings` → `Devices & Services` area
+2. Click "Create Integration" and search for `FordPass`
+3. Follow the setup flow:
+
+   **Step A: Select Brand**
+   - Choose between Ford or Lincoln
+
+   **Step B: Select Region**  
+   - Select the region where your FordPass/Lincoln account is registered
+
+   **Step C: Automatic OAuth2 Authentication** ✨ NEW IN v2026.5.0
+   - A browser window opens automatically
+   - Log in with your FordPass™/The Lincoln Way™ credentials
+   - Grant access to your vehicle data
+   - Browser automatically redirects back to HA
+   - **No manual code copying required!**
+
+   **Step D: Account Confirmation**
+   - Enter your FordPass email address (for verification)
+
+   **Step E: Vehicle Selection**
+   - Select the vehicle you want to add
+   - Integration completes and connects to your vehicle
 
 > [!IMPORTANT]  
-> The region you are going to select __must match__ the region for which you have __registered your FordPass™/The Lincoln Way™__ account.
+> The region you select **must match** the region where your FordPass™/The Lincoln Way™ account is registered.
 >
-> While for some countries there is a cross-region support in place (like for European countries and North America), there are other regions where an account registered in a specific country __can't__ be used in another region. E.g. an Ford account registered with the Ford domain in Australia (ford.com.au) can not be used with the USA domain (ford.com).
->
-> So if your country is not listed in the integration, and you follow the recommendation to register a sperate account to be used with the integration, then [__register this second account at the ford.com domain__](https://www.ford.com/#$userCreateAccount), since this ensures that you can use the Integration with the 'Rest of the World' Region setting.
+> Cross-region support exists for some countries (European countries, North America), but others don't. For example:
+> - Ford account registered on ford.com.au (Australia) cannot be used with ford.com (USA)
+> - If your country isn't listed, register with [ford.com domain](https://www.ford.com/#$userCreateAccount) and select "Rest of the World" region
 
-### Step 3. The hard part — the **Token Setup**
-The actual token request requires an external browser to get finally the FordPass™/The Lincoln Way™ access token. [Yes this is for sure quite unusual process when setting up a HA integration, but it's the only way to get the token right now]
+### Step 3. Done! ✅
 
-Please follow the steps:
-1. Copy the URL listed in the first input field
-2. Open a new/separate browser (with enabled developer tools) and paste the copied URL it into this second browser instance (you might like to use a private/incognito window for this)
-3. In this second browser: Enter your FordPass™/The Lincoln Way™ credentials (again) and press the login button
-4. Watch the developer tools Network-tab till you see the `?code=` request (this request will fail, but this error is not important). This `?code=` request contains the required access token as a URL parameter.
-5. Copy the full `Request-URL` from this `?code=` request from the browser's developer tools and paste it in the HA integration setup Token field [you must copy the complete URL - so ist must start with `fordapp://userauthorized/?code= ... ` (or `lincolnapp://userauthorized/?code= ... `)]
+The integration is now connected and will automatically receive vehicle data updates. No additional token setup required!
 
-More details (how to deal with the browser developer tools) to get your token can be found in the [additional 'obtaining token document'](./doc/OBTAINING_TOKEN.md).
+---
+
+## Legacy Token Setup (v2026.4.4 and Earlier)
+
+> [!NOTE]
+> This section is for reference only. If upgrading to v2026.5.0+, use the automatic OAuth2 flow above instead.
+
+The old manual token extraction process required:
+1. Copy the authorization URL
+2. Open a browser with developer tools
+3. Login to FordPass
+4. Monitor the Network tab for the `?code=` request
+5. Copy and paste the full URL back into HA
+
+This manual process has been **completely automated in v2026.5.0+** with the standard OAuth2 flow.
+
+For detailed historical information, see [obtaining token documentation](./doc/OBTAINING_TOKEN.md).
 
 
 ## Usage with EVCC
